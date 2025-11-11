@@ -1,21 +1,131 @@
-body {
-  background-color: yellow;
-  color: #222;              /* dark text for contrast */
-  font-family: Arial, sans-serif;
-  margin: 40px;
-  text-align: center;
+/* ===== FHIR-Hemoglobin A1c Highchart — Gold Theme ===== */
+
+/* Design tokens */
+:root{
+  --gold-1: #fff5cc;        /* very light gold (bg glow) */
+  --gold-2: #ffe480;        /* soft gold (panel gradient) */
+  --gold-3: #ffcf33;        /* primary gold */
+  --gold-4: #ffb300;        /* accent gold/orange */
+  --ink:    #222222;        /* main text (high contrast) */
+  --muted:  #5a5a5a;        /* secondary text */
+  --panel:  #ffffff;        /* card base */
+  --ring:   0 0 0 3px rgba(255,179,0,.25);
+  --radius: 16px;
+  --shadow: 0 10px 28px rgba(0,0,0,.15);
 }
 
-h1 {
-  color: #b30000;           /* darker red header text */
+/* Global base */
+*{ box-sizing:border-box }
+html, body{ height:100% }
+
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+  color:var(--ink);
+  /* warm golden background with subtle glow */
+  background:
+    radial-gradient(1100px 700px at -10% -10%, var(--gold-1), transparent 60%),
+    radial-gradient(1000px 600px at 120% 0%, rgba(255,207,51,.18), transparent 65%),
+    #fff8db;
+  line-height:1.55;
+  padding: clamp(16px, 4vw, 36px);
 }
 
-#container {
-  width: 90%;
-  height: 400px;
-  margin: 30px auto;
-  background: white;
-  border: 2px solid #333;
+/* Page title */
+h1{
+  margin: 0 0 14px;
+  font-size: clamp(1.4rem, 1.1rem + 1.6vw, 2rem);
+  font-weight: 800;
+  letter-spacing: .2px;
+  color: #1e1a0f; /* deep warm ink */
+  text-wrap: balance;
+  /* subtle bottom accent underline */
+  background:
+    linear-gradient(90deg, var(--gold-3), var(--gold-4));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Chart container as a “card” */
+#container{
+  width:100%;
+  height: clamp(360px, 56vh, 620px);
+  margin: 10px auto 0;
+  background:
+    linear-gradient(180deg, rgba(255,236,179,.55), rgba(255,255,255,1) 35%, rgba(255,255,255,1)),
+    var(--panel);
+  border: 1px solid rgba(255,179,0,.35);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 10px;                  /* breathing room around SVG */
+  outline: none;
+}
+
+/* Focus ring for accessibility (if container is made focusable) */
+#container:focus-visible{
+  box-shadow: var(--shadow), var(--ring);
+}
+
+/* ---------- Highcharts polish (inherits the theme) ---------- */
+.highcharts-root text{
+  font-family: inherit !important;
+  fill: var(--muted);
+}
+
+/* Title & subtitle (you set these in JS) */
+.highcharts-title{
+  fill: #2b2100 !important;
+  font-weight: 800 !important;
+}
+.highcharts-subtitle{
+  fill: var(--muted) !important;
+}
+
+/* Axes */
+.highcharts-axis-title,
+.highcharts-axis-labels text{
+  fill: #6b5b28 !important; /* warm brownish label */
+}
+
+/* Gridlines (lighter, golden tint) */
+.highcharts-grid-line{
+  stroke: rgba(255,179,0,.18) !important;
+}
+.highcharts-minor-grid-line{
+  stroke: rgba(255,179,0,.12) !important;
+}
+
+/* Tooltip (HTML mode looks nicest) */
+.highcharts-tooltip{ filter: drop-shadow(0 6px 18px rgba(0,0,0,.18)); }
+.highcharts-tooltip > span{
+  background: #fffef8;
+  color: #2b2100;
+  border: 1px solid rgba(255,179,0,.35);
+  padding: .55rem .7rem;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
+
+/* Legend (if enabled later) */
+.highcharts-legend-item text{ fill: #2b2100 !important; }
+
+/* Export buttons (if you enable exporting) */
+.highcharts-button-box{
+  fill: #fffdfa !important;
+  stroke: rgba(255,179,0,.45) !important;
+}
+.highcharts-button text{ fill: #2b2100 !important; }
+
+/* Optional: give series a warm default palette if you want
+   (otherwise Highcharts’ defaults will be used)
+   Enable by adding this to your JS:
+   Highcharts.setOptions({ colors: ['#ffb300', '#ffcf33', '#f57f17', '#795548', '#6d4c41'] });
+*/
+
+/* Small screens */
+@media (max-width: 560px){
+  body{ padding:16px; }
+  h1{ margin-bottom:10px; }
+  #container{ height:52vh; }
+}
+
