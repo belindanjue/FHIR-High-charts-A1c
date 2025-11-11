@@ -1,4 +1,21 @@
 body {
-  background-color:yellow;
+  background-color: yellow;
+  color: #222;              /* dark text for contrast */
+  font-family: Arial, sans-serif;
+  margin: 40px;
+  text-align: center;
 }
 
+h1 {
+  color: #b30000;           /* darker red header text */
+}
+
+#container {
+  width: 90%;
+  height: 400px;
+  margin: 30px auto;
+  background: white;
+  border: 2px solid #333;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
